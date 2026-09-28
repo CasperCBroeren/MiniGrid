@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.SignalR;
-using MiniGrid.GameEngine;
 using MiniGrid.Server.Dto;
-using MiniGrid.Server.Models;
 using MiniGrid.Server.Services;
 
 namespace MiniGrid.Server.Hubs;
@@ -126,8 +124,9 @@ public class GameHub : Hub
         {
             GameCode = gameCode,
             GameState = game.GameEngineGame.GameState,
-            CurrentDay = game.GameEngineGame.CurrentDay.DayNumber,
-            CurrentHour = game.GameEngineGame.CurrentDay.Hour,
+            CurrentDay = game.GameEngineGame.CurrentDay.Date.Day,
+            CurrentHour = game.GameEngineGame.CurrentDay.Date.Hour,
+            CurrentMonth = game.GameEngineGame.CurrentDay.Date.Month,
             IsPaused = game.IsPaused,
             GameSpeed = game.GameSpeed,
             Players = game.Players.Select(p => new PlayerState

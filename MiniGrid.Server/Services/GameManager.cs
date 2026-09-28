@@ -5,7 +5,7 @@ namespace MiniGrid.Server.Services;
 
 public class GameManager
 {
-    private readonly Dictionary<string, ServerGame> _games = new();
+    private readonly Dictionary<string, ServerGame> _games = [];
     private readonly object _lock = new();
 
     public string CreateGame(string playerName, string connectionId)
@@ -17,7 +17,7 @@ public class GameManager
             {
                 GameCode = gameCode,
                 GameEngineGame = new Game { GameCode = gameCode },
-                Players = new List<GamePlayer>(),
+                Players = [],
                 IsStarted = false,
                 GameSpeed = GameSpeed.Normal,
                 IsPaused = false

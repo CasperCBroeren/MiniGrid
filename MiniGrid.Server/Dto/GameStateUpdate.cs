@@ -9,9 +9,10 @@ public class GameStateUpdate
     public GameState GameState { get; set; }
     public int CurrentDay { get; set; }
     public int CurrentHour { get; set; }
-    public List<PlayerState> Players { get; set; } = new List<PlayerState>();
+    public List<PlayerState> Players { get; set; } = [];
     public bool IsPaused { get; set; }
     public GameSpeed GameSpeed { get; set; }
+    public int CurrentMonth { get; internal set; }
 }
 
 public class PlayerState
