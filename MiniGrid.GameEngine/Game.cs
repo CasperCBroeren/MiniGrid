@@ -26,6 +26,8 @@ public class Game
 
     public List<Player> Players { get; set; } = new List<Player>();
 
+    public string GameCode { get; set; }
+
     public Game()
     {
         CurrentDay = new DayInfo(new GameTime(1, 1, 0));

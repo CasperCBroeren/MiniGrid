@@ -12,6 +12,8 @@ public class Player
     public int Balance { get; internal set; }
     public int TotalConsumptionKWh { get; internal set; }
 
+    public bool GameLeader { get; set; }
+
     public void BuyAsset(EnergyAssets asset)
     {
         CashInEuro -= asset.Price;
