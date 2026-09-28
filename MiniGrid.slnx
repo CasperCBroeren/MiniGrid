@@ -2,6 +2,7 @@
   <Folder Name="/Solution Items/">
     <File Path="frontend.plan.md" />
     <File Path="plan.md" />
+    <File Path="server.plan.md" />
   </Folder>
   <Folder Name="/src/">
     <Project Path="MiniGrid.GameEngine/MiniGrid.GameEngine.csproj" />

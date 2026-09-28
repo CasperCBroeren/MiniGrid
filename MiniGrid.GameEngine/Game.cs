@@ -31,6 +31,7 @@ public class Game
     public Game()
     {
         CurrentDay = new DayInfo(new GameTime(1, 1, 0));
+        GameCode = Guid.NewGuid().ToString().Substring(0, 8).ToUpper();
     }
 
     public void Tick()
@@ -81,12 +82,22 @@ public class Game
         GameState = GameState.Playing;
     }
 
-    public void Run(CancellationToken cancellationToken)
+    public async Task RunAsync(CancellationToken cancellationToken, Func<Game, Task> gamestate)
     {
         while (GameState == GameState.Playing 
             && !cancellationToken.IsCancellationRequested)
         {
             Tick();
+            await gamestate(this);
+        }
+    }
+
+    public void Run(CancellationToken cancellationToken)
+    {
+        while (GameState == GameState.Playing
+            && !cancellationToken.IsCancellationRequested)
+        {
+            Tick(); 
         }
     }
 }
