@@ -6,6 +6,7 @@
   </Folder>
   <Folder Name="/src/">
     <Project Path="MiniGrid.GameEngine/MiniGrid.GameEngine.csproj" />
+    <Project Path="MiniGrid.Server/MiniGrid.Server.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="MiniGrid.GameEngine.Tests/MiniGrid.GameEngine.Tests.csproj" Id="09db81be-80ae-4689-af04-4e26b1912c62" />
