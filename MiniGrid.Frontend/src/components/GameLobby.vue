@@ -121,7 +121,6 @@
     const nameInput = ref<string>('');
     const gameCodeInput = ref<string>('');
     const joinError = ref<string>('');
-    const serverUrl = ref<string>('https://localhost:5001');
 
     // Tabs
     const activeTab = ref<'create' | 'join'>('create');
@@ -141,18 +140,7 @@
     const hasGameCode = computed(() => gameStore.hasGameCode);
     const canStartGame = computed(() => gameStore.canStartGame);
 
-    // Lifecycle
-    onMounted(async () => {
-        try {
-            await gameStore.connectToServer(serverUrl.value);
-        } catch (error) {
-            console.error('Failed to connect on mount:', error);
-        }
-    });
-
-    onUnmounted(() => {
-        gameStore.disconnect();
-    });
+  
 
     // Methods
     async function handleCreateGame() {
@@ -190,6 +178,7 @@
     async function handleStartGame() {
         try {
             await gameStore.startGame();
+            console.log("GameStarted");
         } catch (error) {
             console.error('Failed to start game:', error);
         }
