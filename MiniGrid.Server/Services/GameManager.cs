@@ -186,6 +186,22 @@ public static class GameManager
             }
         }
     }
+    
+    // Method to update a player's connection ID (for reconnections)
+    public static void UpdatePlayerConnection(string gameCode, string oldConnectionId, string newConnectionId)
+    {
+        lock (_lock)
+        {
+            if (!_games.TryGetValue(gameCode, out var serverGame))
+                return;
+
+            var player = serverGame.Players.FirstOrDefault(p => p.ConnectionId == oldConnectionId);
+            if (player != null)
+            {
+                player.ConnectionId = newConnectionId;
+            }
+        }
+    }
 
     public static void TickAllGames()
     {
