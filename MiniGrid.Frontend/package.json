@@ -2,7 +2,7 @@
   "name": "mini-grid-frontend",
   "version": "1.0.0",
   "description": "MiniGrid Game Frontend",
-  "type": "module",
+  "main": "main.js",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
