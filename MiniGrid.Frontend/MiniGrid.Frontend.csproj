@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>MiniGrid.Frontend</RootNamespace>
+    <OutputType>Exe</OutputType>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="**/*.vue" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="**/*.ts" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="**/*.js" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="**/*.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="**/*.html" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="**/*.css" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

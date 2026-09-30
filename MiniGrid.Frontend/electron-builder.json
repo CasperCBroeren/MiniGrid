@@ -1,0 +1,24 @@
+{
+  "appId": "com.minigrid.frontend",
+  "productName": "MiniGrid",
+  "directories": {
+    "output": "dist-electron"
+  },
+  "files": [
+    "dist/**/*",
+    "main.js",
+    "package.json"
+  ],
+  "win": {
+    "target": "nsis",
+    "icon": "src/assets/icon.ico"
+  },
+  "mac": {
+    "target": "dmg",
+    "icon": "src/assets/icon.icns"
+  },
+  "linux": {
+    "target": "AppImage",
+    "icon": "src/assets/icon.png"
+  }
+}
