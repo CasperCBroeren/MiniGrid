@@ -3,12 +3,12 @@ using MiniGrid.Server.Models;
 
 namespace MiniGrid.Server.Services;
 
-public class GameManager
+public static class GameManager
 {
-    private readonly Dictionary<string, ServerGame> _games = [];
-    private readonly object _lock = new();
+    private static readonly Dictionary<string, ServerGame> _games = [];
+    private static readonly object _lock = new();
 
-    public string CreateGame(string playerName, string connectionId)
+    public static string CreateGame(string playerName, string connectionId)
     {
         lock (_lock)
         {
@@ -41,7 +41,7 @@ public class GameManager
         }
     }
 
-    public bool JoinGame(string gameCode, string playerName, string connectionId, out string playerId, out string error)
+    public static bool JoinGame(string gameCode, string playerName, string connectionId, out string playerId, out string error)
     {
         lock (_lock)
         {
@@ -83,7 +83,7 @@ public class GameManager
         }
     }
 
-    public bool StartGame(string gameCode, string playerId)
+    public static bool StartGame(string gameCode, string playerId)
     {
         lock (_lock)
         {
@@ -105,7 +105,7 @@ public class GameManager
         }
     }
 
-    public bool PauseGame(string gameCode, string playerId, bool pause)
+    public static bool PauseGame(string gameCode, string playerId, bool pause)
     {
         lock (_lock)
         {
@@ -123,7 +123,7 @@ public class GameManager
         }
     }
 
-    public bool SetGameSpeed(string gameCode, string playerId, GameSpeed gameSpeed)
+    public static bool SetGameSpeed(string gameCode, string playerId, GameSpeed gameSpeed)
     {
         lock (_lock)
         {
@@ -141,7 +141,7 @@ public class GameManager
         }
     }
 
-    public ServerGame? GetGame(string gameCode)
+    public static ServerGame? GetGame(string gameCode)
     {
         lock (_lock)
         {
@@ -150,7 +150,7 @@ public class GameManager
         }
     }
 
-    public IEnumerable<ServerGame> GetAllGames()
+    public static IEnumerable<ServerGame> GetAllGames()
     {
         lock (_lock)
         {
@@ -158,7 +158,7 @@ public class GameManager
         }
     }
 
-    public void RemovePlayer(string gameCode, string connectionId)
+    public static void RemovePlayer(string gameCode, string connectionId)
     {
         lock (_lock)
         {
@@ -187,7 +187,7 @@ public class GameManager
         }
     }
 
-    public void TickAllGames()
+    public static void TickAllGames()
     {
         lock (_lock)
         {
@@ -201,7 +201,7 @@ public class GameManager
         }
     }
 
-    private string GenerateGameCode()
+    private static string GenerateGameCode()
     {
         const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         var random = new Random();

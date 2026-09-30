@@ -5,21 +5,19 @@ using MiniGrid.Server.Services;
 namespace MiniGrid.Server.Hubs;
 
 public class GameHub : Hub
-{
-    private readonly GameManager _gameManager;
+{ 
     private readonly ILogger<GameHub> _logger;
     private readonly IHubContext<GameHub> _hubContext;
 
-    public GameHub(GameManager gameManager, ILogger<GameHub> logger, IHubContext<GameHub> hubContext)
-    {
-        _gameManager = gameManager;
+    public GameHub(ILogger<GameHub> logger, IHubContext<GameHub> hubContext)
+    { 
         _logger = logger;
         _hubContext = hubContext;
     }
 
     public CreateGameResponse CreateGame(string playerName)
     {
-        var gameCode = _gameManager.CreateGame(playerName, Context.ConnectionId);
+        var gameCode = GameManager.CreateGame(playerName, Context.ConnectionId);
         var playerId = GetPlayerIdFromConnection(Context.ConnectionId, gameCode);
         
         return new CreateGameResponse
@@ -32,7 +30,7 @@ public class GameHub : Hub
 
     public JoinGameResponse JoinGame(JoinGameRequest request)
     {
-        var success = _gameManager.JoinGame(
+        var success = GameManager.JoinGame(
             request.GameCode,
             request.PlayerName,
             Context.ConnectionId,
@@ -60,7 +58,7 @@ public class GameHub : Hub
 
     public bool StartGame(StartGameRequest request)
     {
-        var result = _gameManager.StartGame(request.GameCode, request.PlayerId);
+        var result = GameManager.StartGame(request.GameCode, request.PlayerId);
         if (result)
         {
             BroadcastGameState(request.GameCode);
@@ -70,7 +68,7 @@ public class GameHub : Hub
 
     public bool PauseGame(PauseGameRequest request)
     {
-        var result = _gameManager.PauseGame(request.GameCode, request.PlayerId, request.Pause);
+        var result = GameManager.PauseGame(request.GameCode, request.PlayerId, request.Pause);
         if (result)
         {
             BroadcastGameState(request.GameCode);
@@ -80,7 +78,7 @@ public class GameHub : Hub
 
     public bool SetGameSpeed(SetGameSpeedRequest request)
     {
-        var result = _gameManager.SetGameSpeed(request.GameCode, request.PlayerId, request.GameSpeed);
+        var result = GameManager.SetGameSpeed(request.GameCode, request.PlayerId, request.GameSpeed);
         if (result)
         {
             BroadcastGameState(request.GameCode);
@@ -91,10 +89,10 @@ public class GameHub : Hub
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
         // Find and remove the player from all games
-        foreach (var game in _gameManager.GetAllGames())
+        foreach (var game in GameManager.GetAllGames())
         {
             var gameCode = game.GameCode;
-            _gameManager.RemovePlayer(gameCode, Context.ConnectionId);
+            GameManager.RemovePlayer(gameCode, Context.ConnectionId);
             BroadcastGameState(gameCode);
         }
 
@@ -103,7 +101,7 @@ public class GameHub : Hub
 
     private string GetPlayerIdFromConnection(string connectionId, string gameCode)
     {
-        var game = _gameManager.GetGame(gameCode);
+        var game = GameManager.GetGame(gameCode);
         if (game != null)
         {
             var player = game.Players.FirstOrDefault(p => p.ConnectionId == connectionId);
@@ -117,7 +115,7 @@ public class GameHub : Hub
 
     private void BroadcastGameState(string gameCode)
     {
-        var game = _gameManager.GetGame(gameCode);
+        var game = GameManager.GetGame(gameCode);
         if (game == null) return;
 
         var gameStateUpdate = new GameStateUpdate

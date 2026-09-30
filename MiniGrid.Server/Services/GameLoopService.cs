@@ -4,13 +4,11 @@ namespace MiniGrid.Server.Services;
 
 public class GameLoopService : BackgroundService
 {
-    private readonly GameManager _gameManager;
     private readonly ILogger<GameLoopService> _logger;
     private readonly TimeSpan _tickInterval = TimeSpan.FromMilliseconds(100);
 
-    public GameLoopService(GameManager gameManager, ILogger<GameLoopService> logger)
+    public GameLoopService(ILogger<GameLoopService> logger)
     {
-        _gameManager = gameManager;
         _logger = logger;
     }
 
@@ -22,7 +20,8 @@ public class GameLoopService : BackgroundService
         {
             try
             {
-                _gameManager.TickAllGames();
+                GameManager.TickAllGames();
+                await Task.Delay(100);
             }
             catch (Exception ex)
             {

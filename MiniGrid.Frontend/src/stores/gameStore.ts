@@ -21,7 +21,7 @@ export const useGameStore = defineStore('game', () => {
   const gameStarted = ref<boolean>(false);
 
   const hasGameCode = computed(() => gameCode.value.length > 0);
-  const canStartGame = computed(() => isGameLeader.value && players.value.length > 0 && !gameStarted.value);
+  const canStartGame = computed(() => isGameLeader.value && players.value.length >= 0 && !gameStarted.value);
 
   async function connectToServer(serverUrl?: string): Promise<void> {
     try {
