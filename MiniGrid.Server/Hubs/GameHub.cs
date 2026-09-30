@@ -88,15 +88,12 @@ public class GameHub : Hub
 
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
-        // Don't immediately remove players on disconnection
-        // SignalR connections can be transient, and we don't want to
-        // remove a player just because their connection dropped temporarily.
-        // The player will be removed when they explicitly leave or when
-        // the game ends naturally.
-        
-        // Optionally, you could add a timeout-based cleanup for truly disconnected players,
-        // but for now we just let them reconnect with the same connection ID.
-        
+        foreach (var game in GameManager.GetAllGames())
+        {
+            var gameCode = game.GameCode;
+            GameManager.RemovePlayer(gameCode, Context.ConnectionId);
+            BroadcastGameState(gameCode);
+        }
         await base.OnDisconnectedAsync(exception);
     }
 
