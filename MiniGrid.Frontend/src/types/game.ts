@@ -53,6 +53,8 @@ export interface GameStateUpdate {
   isPaused: boolean;
   gameSpeed: number;
   players: PlayerState[];
+  solarRadiation?: number;
+  windSpeed?: number;
 }
 
 export interface GamePlayer {

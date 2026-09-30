@@ -13,6 +13,8 @@ public class GameStateUpdate
     public bool IsPaused { get; set; }
     public GameSpeed GameSpeed { get; set; }
     public int CurrentMonth { get; internal set; }
+    public double SolarRadiation { get; set; }
+    public double WindSpeed { get; set; }
 }
 
 public class PlayerState

@@ -86,10 +86,15 @@ export const useGameStore = defineStore('game', () => {
       return false;
     }
     try {
-      return await signalRService.startGame({
+      const result = await signalRService.startGame({
         gameCode: gameCode.value,
         playerId: playerId.value,
       });
+      if (result) {
+        // Game has started, update local state
+        gameStarted.value = true;
+      }
+      return result;
     } catch (error) {
       console.error('Start game error:', error);
       return false;

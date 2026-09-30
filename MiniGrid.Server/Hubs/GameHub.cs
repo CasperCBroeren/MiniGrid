@@ -129,6 +129,8 @@ public class GameHub : Hub
             CurrentMonth = game.GameEngineGame.CurrentDay.Date.Month,
             IsPaused = game.IsPaused,
             GameSpeed = game.GameSpeed,
+            SolarRadiation = game.GameEngineGame.CurrentDay.SolarRadiation,
+            WindSpeed = game.GameEngineGame.CurrentDay.WindSpeed,
             Players = game.Players.Select(p => new PlayerState
             {
                 PlayerId = p.PlayerId,
