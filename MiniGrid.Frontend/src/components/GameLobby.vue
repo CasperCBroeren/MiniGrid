@@ -1,141 +1,6 @@
-<script setup lang="ts">
-import { ref, onMounted, onUnmounted, computed } from 'vue';
-import { useGameStore } from '@/stores/gameStore';
-
-const gameStore = useGameStore();
-
-// Form inputs
-const nameInput = ref<string>('');
-const gameCodeInput = ref<string>('');
-const joinError = ref<string>('');
-const serverUrl = ref<string>('https://localhost:5001');
-
-// Tabs
-const activeTab = ref<'create' | 'join'>('create');
-
-// Game speed options
-const gameSpeeds = [
-  { label: 'Slow', value: 1 },
-  { label: 'Normal', value: 2 },
-  { label: 'Fast', value: 3 },
-];
-const selectedSpeed = ref<number>(2);
-
-// Connection status
-const statusMessage = computed(() => {
-  if (gameStore.connectionError) {
-    return `Error: ${gameStore.connectionError}`;
-  }
-  if (gameStore.isConnected) {
-    return 'Connected to server';
-  }
-  return 'Disconnected';
-});
-
-// Player list
-const playerList = computed(() => gameStore.players);
-const isGameLeader = computed(() => gameStore.isGameLeader);
-const hasGameCode = computed(() => gameStore.hasGameCode);
-const canStartGame = computed(() => gameStore.canStartGame);
-
-// Lifecycle
-onMounted(async () => {
-  try {
-    await gameStore.connectToServer(serverUrl.value);
-  } catch (error) {
-    console.error('Failed to connect on mount:', error);
-  }
-});
-
-onUnmounted(() => {
-  gameStore.disconnect();
-});
-
-// Methods
-async function handleCreateGame() {
-  if (!nameInput.value.trim()) {
-    return;
-  }
-  try {
-    await gameStore.createGame(nameInput.value.trim());
-    joinError.value = '';
-  } catch (error) {
-    joinError.value = error instanceof Error ? error.message : 'Failed to create game';
-  }
-}
-
-async function handleJoinGame() {
-  if (!nameInput.value.trim() || !gameCodeInput.value.trim()) {
-    joinError.value = 'Please enter both name and game code';
-    return;
-  }
-  try {
-    const response = await gameStore.joinGame({
-      gameCode: gameCodeInput.value.trim().toUpperCase(),
-      playerName: nameInput.value.trim(),
-    });
-    if (!response?.success) {
-      joinError.value = response?.error || 'Failed to join game';
-    } else {
-      joinError.value = '';
-    }
-  } catch (error) {
-    joinError.value = error instanceof Error ? error.message : 'Failed to join game';
-  }
-}
-
-async function handleStartGame() {
-  try {
-    await gameStore.startGame();
-  } catch (error) {
-    console.error('Failed to start game:', error);
-  }
-}
-
-async function handlePauseGame() {
-  try {
-    await gameStore.pauseGame(!gameStore.gameState?.isPaused);
-  } catch (error) {
-    console.error('Failed to pause game:', error);
-  }
-}
-
-async function handleSetGameSpeed() {
-  try {
-    await gameStore.setGameSpeed(selectedSpeed.value);
-  } catch (error) {
-    console.error('Failed to set game speed:', error);
-  }
-}
-
-function handleCopyGameCode() {
-  if (gameStore.gameCode) {
-    navigator.clipboard.writeText(gameStore.gameCode);
-  }
-}
-
-function handleReset() {
-  gameStore.resetGameState();
-  nameInput.value = '';
-  gameCodeInput.value = '';
-  joinError.value = '';
-}
-</script>
-
-<template>
-  <div class="lobby-container">
-    <!-- Header -->
-    <header class="header">
-      <h1 class="title">MiniGrid</h1>
-      <div class="status-bar" :class="{ connected: gameStore.isConnected, disconnected: !gameStore.isConnected }">
-        {{ statusMessage }}
-      </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="main-content">
+<template> 
       <!-- Connection Settings -->
-      <div class="connection-settings">
+      <div class="connection-settings" v-if="false">
         <label class="input-label">
           Server URL:
           <input v-model="serverUrl" type="text" class="input-field" placeholder="http://localhost:5000" />
@@ -243,67 +108,124 @@ function handleReset() {
         <button @click="handleReset" class="btn btn-danger">
           Leave Game
         </button>
-      </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-      <p>MiniGrid - A strategic energy management game</p>
-    </footer>
-  </div>
+      </div> 
+ 
 </template>
+<script setup lang="ts">
+    import { ref, onMounted, onUnmounted, computed } from 'vue';
+    import { useGameStore } from '@/stores/gameStore';
 
-<style scoped>
-.lobby-container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
-}
+    const gameStore = useGameStore();
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.5rem 2rem;
-  background: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+    // Form inputs
+    const nameInput = ref<string>('');
+    const gameCodeInput = ref<string>('');
+    const joinError = ref<string>('');
+    const serverUrl = ref<string>('https://localhost:5001');
 
-.title {
-  font-size: 1.75rem;
-  font-weight: 700;
-  color: #1a5f3f;
-  margin: 0;
-}
+    // Tabs
+    const activeTab = ref<'create' | 'join'>('create');
 
-.status-bar {
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-size: 0.875rem;
-  font-weight: 500;
-}
+    // Game speed options
+    const gameSpeeds = [
+        { label: 'Slow', value: 1 },
+        { label: 'Normal', value: 2 },
+        { label: 'Fast', value: 3 },
+    ];
+    const selectedSpeed = ref<number>(2);
+      
 
-.status-bar.connected {
-  background: #d1fae5;
-  color: #065f46;
-}
+    // Player list
+    const playerList = computed(() => gameStore.players);
+    const isGameLeader = computed(() => gameStore.isGameLeader);
+    const hasGameCode = computed(() => gameStore.hasGameCode);
+    const canStartGame = computed(() => gameStore.canStartGame);
 
-.status-bar.disconnected {
-  background: #fee2e2;
-  color: #991b1b;
-}
+    // Lifecycle
+    onMounted(async () => {
+        try {
+            await gameStore.connectToServer(serverUrl.value);
+        } catch (error) {
+            console.error('Failed to connect on mount:', error);
+        }
+    });
 
-.main-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  padding: 2rem;
-  max-width: 800px;
-  margin: 0 auto;
-  width: 100%;
-}
+    onUnmounted(() => {
+        gameStore.disconnect();
+    });
+
+    // Methods
+    async function handleCreateGame() {
+        if (!nameInput.value.trim()) {
+            return;
+        }
+        try {
+            await gameStore.createGame(nameInput.value.trim());
+            joinError.value = '';
+        } catch (error) {
+            joinError.value = error instanceof Error ? error.message : 'Failed to create game';
+        }
+    }
+
+    async function handleJoinGame() {
+        if (!nameInput.value.trim() || !gameCodeInput.value.trim()) {
+            joinError.value = 'Please enter both name and game code';
+            return;
+        }
+        try {
+            const response = await gameStore.joinGame({
+                gameCode: gameCodeInput.value.trim().toUpperCase(),
+                playerName: nameInput.value.trim(),
+            });
+            if (!response?.success) {
+                joinError.value = response?.error || 'Failed to join game';
+            } else {
+                joinError.value = '';
+            }
+        } catch (error) {
+            joinError.value = error instanceof Error ? error.message : 'Failed to join game';
+        }
+    }
+
+    async function handleStartGame() {
+        try {
+            await gameStore.startGame();
+        } catch (error) {
+            console.error('Failed to start game:', error);
+        }
+    }
+
+    async function handlePauseGame() {
+        try {
+            await gameStore.pauseGame(!gameStore.gameState?.isPaused);
+        } catch (error) {
+            console.error('Failed to pause game:', error);
+        }
+    }
+
+    async function handleSetGameSpeed() {
+        try {
+            await gameStore.setGameSpeed(selectedSpeed.value);
+        } catch (error) {
+            console.error('Failed to set game speed:', error);
+        }
+    }
+
+    function handleCopyGameCode() {
+        if (gameStore.gameCode) {
+            navigator.clipboard.writeText(gameStore.gameCode);
+        }
+    }
+
+    function handleReset() {
+        gameStore.resetGameState();
+        nameInput.value = '';
+        gameCodeInput.value = '';
+        joinError.value = '';
+    }
+</script>
+
+<style scoped> 
 
 .connection-settings {
   display: flex;
@@ -585,10 +507,5 @@ function handleReset() {
   margin: 0;
 }
 
-.footer {
-  text-align: center;
-  padding: 1.5rem;
-  color: #6b7280;
-  font-size: 0.875rem;
-}
+
 </style>
