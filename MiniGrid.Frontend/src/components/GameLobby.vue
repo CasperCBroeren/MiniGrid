@@ -8,7 +8,7 @@ const gameStore = useGameStore();
 const nameInput = ref<string>('');
 const gameCodeInput = ref<string>('');
 const joinError = ref<string>('');
-const serverUrl = ref<string>('http://localhost:5000');
+const serverUrl = ref<string>('https://localhost:5001');
 
 // Tabs
 const activeTab = ref<'create' | 'join'>('create');

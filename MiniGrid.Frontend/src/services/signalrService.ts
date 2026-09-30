@@ -11,7 +11,7 @@ class SignalRService {
   private connection: signalR.HubConnection | null = null;
   private serverUrl: string;
 
-  constructor(serverUrl: string = 'http://localhost:5000') {
+  constructor(serverUrl: string = 'https://localhost:5001') {
     this.serverUrl = serverUrl;
   }
 

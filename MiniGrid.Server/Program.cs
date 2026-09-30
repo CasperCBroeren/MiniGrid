@@ -15,7 +15,11 @@ builder.Services.AddCors(options =>
     {
         builder.AllowAnyOrigin()
                .AllowAnyMethod()
-               .AllowAnyHeader();
+               .AllowAnyHeader()
+               .AllowCredentials()
+               .WithOrigins("http://localhost:3000")
+        .SetPreflightMaxAge(TimeSpan.FromSeconds(3600));
+
     });
 });
 
@@ -25,5 +29,10 @@ var app = builder.Build();
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
 app.MapHub<GameHub>("/gameHub");
+app.MapGet("/", async app =>
+{
+    await app.Response.WriteAsync("This is the backend");
+});
+
 
 app.Run();
