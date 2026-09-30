@@ -5,7 +5,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddSignalR();
-builder.Services.AddSingleton<GameManager>();
+
+// Create a single instance of GameManager that will be shared across all services
+var gameManager = new GameManager();
+builder.Services.AddSingleton<GameManager>(gameManager);
 builder.Services.AddHostedService<GameLoopService>();
 
 // Configure CORS for development
