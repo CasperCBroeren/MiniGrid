@@ -1,4 +1,5 @@
 using MiniGrid.GameEngine;
+using MiniGrid.GameEngine.Assets;
 using MiniGrid.Server.Hubs;
 using MiniGrid.Server.Models;
 
@@ -224,5 +225,31 @@ public static class GameManager
         const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         var random = new Random();
         return new string(Enumerable.Repeat(chars, 6).Select(s => s[random.Next(s.Length)]).ToArray());
+    }
+
+    public static bool BuyAsset(string gameCode, string playerId, string assetType)
+    {
+        lock (_lock)
+        {
+            if (!_games.TryGetValue(gameCode, out var serverGame))
+                return false;
+
+            var player = serverGame.Players.FirstOrDefault(p => p.PlayerId == playerId);
+            if (player == null )
+                return false;
+
+            if (assetType == "Wind")
+            {   
+                return player.GameEnginePlayer.BuyAsset(new Wind());
+            }
+            else if (assetType == "Solar")
+            { 
+                return player.GameEnginePlayer.BuyAsset(new Solar());
+            }
+            else
+            {
+                return false; // Invalid asset type
+            } 
+        }
     }
 }

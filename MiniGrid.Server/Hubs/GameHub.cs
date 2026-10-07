@@ -76,6 +76,7 @@ public class GameHub : Hub, IGameHub
         return result;
     }
 
+
     public bool SetGameSpeed(SetGameSpeedRequest request)
     {
         var result = GameManager.SetGameSpeed(request.GameCode, request.PlayerId, request.GameSpeed);
@@ -85,6 +86,17 @@ public class GameHub : Hub, IGameHub
         }
         return result;
     }
+
+    public bool BuyAsset(BuyAssetRequest request)
+    {
+        var result = GameManager.BuyAsset(request.GameCode, request.PlayerId, request.AssetType);
+        if (result)
+        {
+            BroadcastGameState(request.GameCode);
+        }
+        return result;
+    }
+
 
     public override async Task OnDisconnectedAsync(Exception? exception)
     {

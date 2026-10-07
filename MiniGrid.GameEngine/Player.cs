@@ -14,10 +14,15 @@ public class Player
 
     public bool GameLeader { get; set; }
 
-    public void BuyAsset(EnergyAssets asset)
+    public bool BuyAsset(EnergyAssets asset)
     {
+        if (asset.Price > CashInEuro)
+        {
+            return false;
+        }
         CashInEuro -= asset.Price;
         Assets.Add(asset);
+        return true;
     }
 }
 
