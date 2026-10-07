@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.SignalR;
+using MiniGrid.GameEngine;
+using MiniGrid.Server.Hubs;
 using MiniGrid.Server.Services;
 
 namespace MiniGrid.Server.Services;
@@ -5,11 +8,13 @@ namespace MiniGrid.Server.Services;
 public class GameLoopService : BackgroundService
 {
     private readonly ILogger<GameLoopService> _logger;
-    private readonly TimeSpan _tickInterval = TimeSpan.FromMilliseconds(100);
+    private readonly IGameHub gameHub;
+    private readonly TimeSpan _tickInterval = TimeSpan.FromMilliseconds((int)GameSpeed.UltraFast);
 
-    public GameLoopService(ILogger<GameLoopService> logger)
+    public GameLoopService(ILogger<GameLoopService> logger, IGameHub gameHub)
     {
         _logger = logger;
+        this.gameHub = gameHub;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -20,8 +25,7 @@ public class GameLoopService : BackgroundService
         {
             try
             {
-                GameManager.TickAllGames();
-                await Task.Delay(100);
+                GameManager.TickAllGames(gameHub);
             }
             catch (Exception ex)
             {

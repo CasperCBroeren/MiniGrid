@@ -14,9 +14,13 @@ const formattedDate = computed(() => {
                      'July', 'August', 'September', 'October', 'November', 'December'];
   const monthName = monthNames[month - 1] || 'January';
   
-  return `${monthName} ${day}, ${hour}:00`;
+  return ` ${pad(hour,2)}:00 on ${monthName} ${pad(day,2)}`;
 });
-
+function pad (num:number, size:number) {
+    let outNum = num.toString();
+    while (outNum.length < size) outNum = "0" + outNum;
+    return outNum;
+}
 // Get solar radiation with formatting
 const solarRadiation = computed(() => {
   const radiation = gameStore.gameState?.solarRadiation;
@@ -33,17 +37,7 @@ const windSpeed = computed(() => {
 
 // Game state display
 const gameStateDisplay = computed(() => {
-  const state = gameStore.gameState?.gameState;
-  switch (state) {
-    case 'Playing':
-      return 'Running';
-    case 'Pauzed':
-      return 'Paused';
-    case 'Ended':
-      return 'Game Over';
-    default:
-      return state || 'Unknown';
-  }
+ return gameStore.gameState?.gameState;  
 });
 
 // Check if game is paused
@@ -51,19 +45,7 @@ const isPaused = computed(() => gameStore.gameState?.isPaused || false);
 
 // Current game speed display
 const gameSpeedDisplay = computed(() => {
-  const speed = gameStore.gameState?.gameSpeed;
-  switch (speed) {
-    case 1:
-      return 'Ultra Fast';
-    case 2:
-      return 'Very Fast';
-    case 3:
-      return 'Fast';
-    case 208:
-      return 'Normal';
-    default:
-      return `Speed: ${speed}`;
-  }
+  return gameStore.gameState?.gameSpeed;   
 });
 </script>
 
@@ -75,6 +57,20 @@ const gameSpeedDisplay = computed(() => {
         <h1 class="game-title">MiniGrid</h1>
         <p class="game-code">Game: {{ gameStore.gameCode }}</p>
       </div>
+      <div class="controls" v-if="gameStore.isGameLeader">
+        <button @click="gameStore.pauseGame(!isPaused)" class="btn" :class="{ 'btn-warning': !isPaused, 'btn-success': isPaused }">
+          {{ isPaused ? 'Resume' : 'Pause' }}
+        </button>
+        <button @click="gameStore.setGameSpeed('Normal')" class="btn btn-secondary" title="Normal">
+          Normal
+        </button>
+        <button @click="gameStore.setGameSpeed('VeryFast')" class="btn btn-secondary" title="Fast">
+          Fast
+        </button>
+        <button @click="gameStore.setGameSpeed('UltraFast')" class="btn btn-secondary" title="Ultra">
+          Ultra
+        </button>
+      </div>
       <div class="game-status">
         <span class="status-badge" :class="{ paused: isPaused, running: !isPaused && gameStateDisplay === 'Running' }">
           {{ gameStateDisplay }}
@@ -85,31 +81,20 @@ const gameSpeedDisplay = computed(() => {
 
     <!-- Main Game Display -->
     <main class="game-main">
-      <!-- Current Day Card -->
-      <div class="day-card">
-        <h2 class="card-title">Current Day</h2>
+      
+      <div class="game-card">
+        
+      </div>
+ 
+      <div class="weather-card">
+        <h2 class="card-title">Today</h2> 
         <div class="date-display">
           <span class="date-text">{{ formattedDate }}</span>
         </div>
-      </div>
-
-      <!-- Weather Conditions Card -->
-      <div class="weather-card">
-        <h2 class="card-title">Weather Conditions</h2>
         <div class="weather-grid">
           <div class="weather-item">
             <div class="weather-icon solar">
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
-                <circle cx="12" cy="12" r="4" />
-                <path d="M12 2v2" />
-                <path d="M12 20v2" />
-                <path d="m4.93 4.93 1.41 1.41" />
-                <path d="m17.66 17.66 1.41 1.41" />
-                <path d="M2 12h2" />
-                <path d="M20 12h2" />
-                <path d="m6.34 17.66-1.41 1.41" />
-                <path d="m19.07 4.93-1.41 1.41" />
-              </svg>
+              ☀️
             </div>
             <div class="weather-value">
               <span class="value">{{ solarRadiation }}</span>
@@ -119,12 +104,7 @@ const gameSpeedDisplay = computed(() => {
           </div>
           <div class="weather-item">
             <div class="weather-icon wind">
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M18 10h-6" />
-                <path d="M12 6v8" />
-                <path d="M21 11H9" />
-                <path d="M15 6.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z" />
-              </svg>
+             🌬️
             </div>
             <div class="weather-value">
               <span class="value">{{ windSpeed }}</span>
@@ -133,10 +113,6 @@ const gameSpeedDisplay = computed(() => {
             <span class="weather-label">Wind Speed</span>
           </div>
         </div>
-      </div>
-
-      <!-- Player Stats Preview -->
-      <div class="stats-card">
         <h2 class="card-title">Player Stats</h2>
         <div class="stats-grid">
           <div class="stat-item">
@@ -152,23 +128,8 @@ const gameSpeedDisplay = computed(() => {
             <span class="stat-label">Total Production</span>
           </div>
         </div>
-      </div>
-    </main>
-
-    <!-- Game Controls Footer -->
-    <footer class="game-footer" v-if="gameStore.isGameLeader">
-      <div class="controls">
-        <button @click="gameStore.pauseGame(!isPaused)" class="btn" :class="{ 'btn-warning': !isPaused, 'btn-success': isPaused }">
-          {{ isPaused ? 'Resume' : 'Pause' }}
-        </button>
-        <button @click="gameStore.setGameSpeed(2)" class="btn btn-secondary" title="Normal Speed">
-          Normal
-        </button>
-        <button @click="gameStore.setGameSpeed(3)" class="btn btn-secondary" title="Fast Speed">
-          Fast
-        </button>
-      </div>
-    </footer>
+      </div> 
+    </main> 
   </div>
 </template>
 
@@ -270,11 +231,11 @@ const gameSpeedDisplay = computed(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: rem;
 }
 
 .date-text {
-  font-size: 3rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: #1a5f3f;
 }
@@ -346,7 +307,7 @@ const gameSpeedDisplay = computed(() => {
   letter-spacing: 0.05em;
 }
 
-.stats-card {
+.game-card {
   background: white;
   padding: 1.5rem;
   border-radius: 12px;

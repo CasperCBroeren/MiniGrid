@@ -81,7 +81,7 @@ class SignalRService {
     return this.connection.invoke('PauseGame', { gameCode, playerId, pause });
   }
 
-  async setGameSpeed(gameCode: string, playerId: string, gameSpeed: number): Promise<boolean> {
+  async setGameSpeed(gameCode: string, playerId: string, gameSpeed: string): Promise<boolean> {
     if (!this.connection) {
       throw new Error('Not connected to SignalR hub');
     }

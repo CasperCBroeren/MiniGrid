@@ -4,7 +4,7 @@ using MiniGrid.Server.Services;
 
 namespace MiniGrid.Server.Hubs;
 
-public class GameHub : Hub
+public class GameHub : Hub, IGameHub
 { 
     private readonly ILogger<GameHub> _logger;
     private readonly IHubContext<GameHub> _hubContext;
@@ -111,7 +111,7 @@ public class GameHub : Hub
         return string.Empty;
     }
 
-    private void BroadcastGameState(string gameCode)
+    public void BroadcastGameState(string gameCode)
     {
         var game = GameManager.GetGame(gameCode);
         if (game == null) return;

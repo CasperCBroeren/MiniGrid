@@ -1,4 +1,5 @@
 using MiniGrid.GameEngine;
+using MiniGrid.Server.Hubs;
 using MiniGrid.Server.Models;
 
 namespace MiniGrid.Server.Services;
@@ -203,7 +204,7 @@ public static class GameManager
         }
     }
 
-    public static void TickAllGames()
+    public static void TickAllGames(IGameHub gameHub)
     {
         lock (_lock)
         {
@@ -212,6 +213,7 @@ public static class GameManager
                 if (serverGame.IsStarted && !serverGame.IsPaused)
                 {
                     serverGame.GameEngineGame.Tick();
+                    gameHub.BroadcastGameState(serverGame.GameCode);
                 }
             }
         }

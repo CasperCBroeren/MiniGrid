@@ -54,7 +54,7 @@
         </header>
 
         <!-- Main Content -->
-        <main class="main-content">
+        <main class="main-content"> 
             <GameLobby v-if="showGameLobby" />
             <GameScreen v-if="showGameScreen" />
         </main>

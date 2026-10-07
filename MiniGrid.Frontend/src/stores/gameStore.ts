@@ -113,7 +113,7 @@ export const useGameStore = defineStore('game', () => {
     }
   }
 
-  async function setGameSpeed(speed: number): Promise<boolean> {
+  async function setGameSpeed(speed: string): Promise<boolean> {
     if (!gameCode.value || !playerId.value) {
       return false;
     }

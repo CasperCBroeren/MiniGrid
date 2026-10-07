@@ -51,7 +51,7 @@ export interface GameStateUpdate {
   currentHour: number;
   currentMonth: number;
   isPaused: boolean;
-  gameSpeed: number;
+  gameSpeed: string;
   players: PlayerState[];
   solarRadiation?: number;
   windSpeed?: number;
@@ -68,5 +68,5 @@ export interface ServerGame {
   gameCode: string;
   players: GamePlayer[];
   isPaused: boolean;
-  gameSpeed: number;
+  gameSpeed: string;
 }

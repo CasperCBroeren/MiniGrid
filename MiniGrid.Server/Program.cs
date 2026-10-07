@@ -1,14 +1,21 @@
 using MiniGrid.Server.Hubs;
 using MiniGrid.Server.Services;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddSignalR();
+builder.Services.AddSignalR()
+    .AddJsonProtocol(options =>
+    {
+        options.PayloadSerializerOptions.Converters
+            .Add(new JsonStringEnumConverter());
+    });
 
 // Create a single instance of GameManager that will be shared across all services
 
 builder.Services.AddHostedService<GameLoopService>();
+builder.Services.AddSingleton<IGameHub, GameHub>();
 
 // Configure CORS for development
 builder.Services.AddCors(options =>
