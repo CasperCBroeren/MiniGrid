@@ -227,14 +227,21 @@ public static class GameManager
         return new string(Enumerable.Repeat(chars, 6).Select(s => s[random.Next(s.Length)]).ToArray());
     }
 
-    public static bool BuyAsset(string gameCode, string playerId, string assetType)
+    public static GamePlayer? GetPlayer(string gameCode, string playerId)
     {
         lock (_lock)
         {
             if (!_games.TryGetValue(gameCode, out var serverGame))
-                return false;
+                return null;
+            return serverGame.Players.FirstOrDefault(p => p.PlayerId == playerId);
+        }
+    }
 
-            var player = serverGame.Players.FirstOrDefault(p => p.PlayerId == playerId);
+    public static bool BuyAsset(string gameCode, string playerId, string assetType)
+    {
+        lock (_lock)
+        {
+            var player = GetPlayer(gameCode, playerId);
             if (player == null )
                 return false;
 

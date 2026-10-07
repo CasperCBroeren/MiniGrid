@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.SignalR;
+using MiniGrid.GameEngine;
 using MiniGrid.Server.Dto;
 using MiniGrid.Server.Services;
 
@@ -93,6 +94,14 @@ public class GameHub : Hub, IGameHub
         if (result)
         {
             BroadcastGameState(request.GameCode);
+        }
+        else
+        {
+            var player = GameManager.GetPlayer(request.GameCode, request.PlayerId);
+            if (player != null)
+            { 
+                _hubContext.Clients.Client(player.ConnectionId).SendAsync("FailedToBuyAsset", request.AssetType);
+            }
         }
         return result;
     }
