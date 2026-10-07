@@ -113,7 +113,8 @@ const gameSpeedDisplay = computed(() => {
             <span class="weather-label">Wind Speed</span>
           </div>
         </div>
-        <h2 class="card-title">Player Stats</h2>
+
+        <h2 class="card-title">Game Stats</h2>
         <div class="stats-grid">
           <div class="stat-item">
             <span class="stat-value">{{ gameStore.players.length }}</span>
@@ -121,11 +122,11 @@ const gameSpeedDisplay = computed(() => {
           </div>
           <div class="stat-item">
             <span class="stat-value">€{{ gameStore.players.reduce((sum, p) => sum + (p.cashInEuro || 0), 0) }}</span>
-            <span class="stat-label">Total Cash</span>
+            <span class="stat-label"> Cash</span>
           </div>
           <div class="stat-item">
             <span class="stat-value">{{ gameStore.players.reduce((sum, p) => sum + (p.totalProductionKWh || 0), 0) }} kWh</span>
-            <span class="stat-label">Total Production</span>
+            <span class="stat-label">Production</span>
           </div>
         </div>
       </div> 
@@ -137,7 +138,7 @@ const gameSpeedDisplay = computed(() => {
 .game-screen {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
 }
 
@@ -148,6 +149,8 @@ const gameSpeedDisplay = computed(() => {
   padding: 1.5rem 2rem;
   background: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  width: 100%;
 }
 
 .game-info {
@@ -203,10 +206,9 @@ const gameSpeedDisplay = computed(() => {
 .game-main {
   flex: 1;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
-  padding: 2rem;
-  max-width: 1200px;
+  grid-template-columns: 59% 39%;
+  gap: 2%;
+  padding-top: 2rem;
   margin: 0 auto;
   width: 100%;
 }
@@ -251,6 +253,7 @@ const gameSpeedDisplay = computed(() => {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
+  margin-bottom: 5%;
 }
 
 .weather-item {
