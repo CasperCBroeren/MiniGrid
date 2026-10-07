@@ -7,6 +7,7 @@ namespace MiniGrid.Server.Services;
 
 public static class GameManager
 {
+    private const int StartCash = 6000000;
     private static readonly Dictionary<string, ServerGame> _games = [];
     private static readonly object _lock = new();
 
@@ -32,7 +33,7 @@ public static class GameManager
                 PlayerId = playerId,
                 Name = playerName,
                 IsGameLeader = true,
-                GameEnginePlayer = new Player { GameLeader = true, CashInEuro = 6000000 }
+                GameEnginePlayer = new Player { GameLeader = true, CashInEuro = StartCash, TakesPartIn = serverGame.GameEngineGame }
             };
 
             serverGame.Players.Add(gamePlayer);
@@ -75,7 +76,7 @@ public static class GameManager
                 PlayerId = playerId,
                 Name = playerName,
                 IsGameLeader = false,
-                GameEnginePlayer = new Player { GameLeader = false, CashInEuro = 6000000 }
+                GameEnginePlayer = new Player { GameLeader = false, CashInEuro = StartCash, TakesPartIn = serverGame.GameEngineGame }
             };
 
             serverGame.Players.Add(gamePlayer);

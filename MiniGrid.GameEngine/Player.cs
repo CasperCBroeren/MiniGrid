@@ -4,6 +4,7 @@ namespace MiniGrid.GameEngine;
 
 public class Player
 {
+    public Game TakesPartIn { get; set; }
     public List<EnergyAssets> Assets { get; private set; } = [];
     public int CashInEuro { get; set; }
     public int Clients { get; set; } =5000;
@@ -21,6 +22,7 @@ public class Player
             return false;
         }
         CashInEuro -= asset.Price;
+        asset.ActivatedOn = TakesPartIn.CurrentDay.Date;
         Assets.Add(asset);
         return true;
     }
