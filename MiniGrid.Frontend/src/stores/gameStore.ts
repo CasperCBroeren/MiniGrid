@@ -7,6 +7,7 @@ import type {
   JoinGameResponse,
   GameStateUpdate,
   PlayerState,
+  BuyAssetRequest,
 } from '@/types/game';
 
 export const useGameStore = defineStore('game', () => {
@@ -19,6 +20,7 @@ export const useGameStore = defineStore('game', () => {
   const gameState = ref<GameStateUpdate | null>(null);
   const players = ref<PlayerState[]>([]);
   const gameStarted = ref<boolean>(false);
+  const buyAssetError = ref<string | null>(null);
 
   const hasGameCode = computed(() => gameCode.value.length > 0);
   const canStartGame = computed(() => isGameLeader.value && players.value.length >= 0 && !gameStarted.value);
@@ -37,6 +39,13 @@ export const useGameStore = defineStore('game', () => {
         gameState.value = update;
         players.value = update.players;
         gameStarted.value = update.gameState === 'Running';
+      });
+
+      signalRService.onFailedToBuyAsset((assetType: string) => {
+        buyAssetError.value = `Failed to buy ${assetType} asset. You may not have enough cash.`;
+        setTimeout(() => {
+          buyAssetError.value = null;
+        }, 5000);
       });
     } catch (error) {
       connectionError.value = error instanceof Error ? error.message : 'Connection failed';
@@ -125,6 +134,28 @@ export const useGameStore = defineStore('game', () => {
     }
   }
 
+  async function buyAsset(assetType: string): Promise<boolean> {
+    if (!gameCode.value || !playerId.value) {
+      return false;
+    }
+    try {
+      buyAssetError.value = null;
+      const result = await signalRService.buyAsset({
+        gameCode: gameCode.value,
+        playerId: playerId.value,
+        assetType: assetType,
+      });
+      return result;
+    } catch (error) {
+      console.error('Buy asset error:', error);
+      buyAssetError.value = `Failed to buy ${assetType} asset.`;
+      setTimeout(() => {
+        buyAssetError.value = null;
+      }, 5000);
+      return false;
+    }
+  }
+
   function resetGameState(): void {
     playerName.value = '';
     gameCode.value = '';
@@ -133,6 +164,7 @@ export const useGameStore = defineStore('game', () => {
     gameState.value = null;
     players.value = [];
     gameStarted.value = false;
+    buyAssetError.value = null;
   }
 
   return {
@@ -146,6 +178,7 @@ export const useGameStore = defineStore('game', () => {
     gameState,
     players,
     gameStarted,
+    buyAssetError,
     
     // Computed
     hasGameCode,
@@ -159,6 +192,7 @@ export const useGameStore = defineStore('game', () => {
     startGame,
     pauseGame,
     setGameSpeed,
+    buyAsset,
     resetGameState,
   };
 });

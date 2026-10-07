@@ -28,4 +28,5 @@ public class PlayerState
     public int TotalConsumptionKWh { get; set; }
     public int TotalCarbonEmitted { get; set; }
     public int Balance { get; set; }
+    public List<string> Assets { get; set; } = [];
 }

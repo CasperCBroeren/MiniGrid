@@ -42,6 +42,7 @@ export interface PlayerState {
   totalConsumptionKWh: number;
   totalCarbonEmitted: number;
   balance: number;
+  assets: string[];
 }
 
 export interface GameStateUpdate {
@@ -69,4 +70,19 @@ export interface ServerGame {
   players: GamePlayer[];
   isPaused: boolean;
   gameSpeed: string;
+}
+
+export interface Asset {
+  name: string;
+  price: number;
+}
+
+export interface PlayerAsset extends Asset {
+  maxKiloWattHour: number;
+}
+
+export interface BuyAssetRequest {
+  gameCode: string;
+  playerId: string;
+  assetType: string;
 }

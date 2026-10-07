@@ -5,6 +5,7 @@ import type {
   JoinGameResponse,
   StartGameRequest,
   GameStateUpdate,
+  BuyAssetRequest,
 } from '@/types/game';
 
 class SignalRService {
@@ -86,6 +87,25 @@ class SignalRService {
       throw new Error('Not connected to SignalR hub');
     }
     return this.connection.invoke('SetGameSpeed', { gameCode, playerId, gameSpeed });
+  }
+
+  async buyAsset(request: BuyAssetRequest): Promise<boolean> {
+    if (!this.connection) {
+      throw new Error('Not connected to SignalR hub');
+    }
+    return this.connection.invoke('BuyAsset', request);
+  }
+
+  onFailedToBuyAsset(callback: (assetType: string) => void): void {
+    if (this.connection) {
+      this.connection.on('FailedToBuyAsset', callback);
+    }
+  }
+
+  offFailedToBuyAsset(callback: (assetType: string) => void): void {
+    if (this.connection) {
+      this.connection.off('FailedToBuyAsset', callback);
+    }
   }
 
   getConnectionState(): signalR.HubConnectionState | null {

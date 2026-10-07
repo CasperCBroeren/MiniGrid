@@ -158,7 +158,8 @@ public class GameHub : Hub, IGameHub
                 TotalProductionKWh = p.GameEnginePlayer.TotalProductionKWh,
                 TotalConsumptionKWh = p.GameEnginePlayer.TotalConsumptionKWh,
                 TotalCarbonEmitted = p.GameEnginePlayer.TotalCarbonEmitted,
-                Balance = p.GameEnginePlayer.Balance
+                Balance = p.GameEnginePlayer.Balance,
+                Assets = p.GameEnginePlayer.Assets.Select(a => a.Name).ToList()
             }).ToList()
         };
 
