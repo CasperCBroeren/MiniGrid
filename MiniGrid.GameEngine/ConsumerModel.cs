@@ -23,7 +23,7 @@ public static class ConsumerModel
         };
         // Total consumption calculation
         var kWh =  (baseConsumptionPerClientWatt * timeOfDayMultiplier * seasonalMultiplier) / 1000;
-        return (int)(clients * kWh);
+        return (int)(clients * kWh)/10; // for balance just divide by 10 to make it more realistic for the game
     }   
 }
 

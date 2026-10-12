@@ -13,7 +13,7 @@ public class ConsumerModelTest
         // Act
         for (var i = 0; i < 365; i++)
         {
-            result += ConsumerModel.CalculateConsumptionKw(1, dayInfo);
+            result += ConsumerModel.CalculateConsumptionKw(10, dayInfo);
             dayInfo = dayInfo.Progress();
         }
         

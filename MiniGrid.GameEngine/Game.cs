@@ -45,10 +45,10 @@ public class Game
                 // Update asset yields for the current hour
                 foreach(var player in Players)
                 {
+                    var consumption = ConsumerModel.CalculateConsumptionKw(player.Clients, CurrentDay);
+                    player.TotalConsumptionKWh += consumption;
                     foreach (var asset in player.Assets)
-                    {
-                        var consumption = ConsumerModel.CalculateConsumptionKw(player.Clients, CurrentDay);
-                        player.TotalConsumptionKWh += consumption;
+                    {                        
                         // The asset should be active
                         if (asset.ActivatedOn != null && asset.ActivatedOn.AddHours(asset.RampRateInHours) < CurrentDay.Date)
                         {
