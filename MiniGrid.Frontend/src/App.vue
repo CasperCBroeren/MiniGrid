@@ -3,20 +3,27 @@
     import { useGameStore } from '@/stores/gameStore';
     import GameLobby from '@/components/GameLobby.vue';
     import GameScreen from '@/components/GameScreen.vue';
+    import EndGameScreen from '@/components/EndGameScreen.vue';
 
     const serverUrl = ref<string>('https://localhost:5001');
     const gameStore = useGameStore();
 
-    // Show GameLobby when game hasn't started or is ended
+    // Show GameLobby when game hasn't started
     // Show GameScreen when game is running
+    // Show EndGameScreen when game has ended
     const showGameLobby = computed(() => {
         const state = gameStore.gameState?.gameState;
-        return !state || state === 'NotStarted' || state === 'Ended';
+        return !state || state === 'NotStarted';
     });
 
     const showGameScreen = computed(() => {
         const state = gameStore.gameState?.gameState;
         return state === 'Playing' || state === 'Pauzed';
+    });
+
+    const showEndGameScreen = computed(() => {
+        const state = gameStore.gameState?.gameState;
+        return state === 'Ended';
     });
 
     // Connection status
@@ -57,6 +64,7 @@
         <main class="main-content"> 
             <GameLobby v-if="showGameLobby" />
             <GameScreen v-if="showGameScreen" />
+            <EndGameScreen v-if="showEndGameScreen" />
         </main>
 
         <!-- Footer -->
