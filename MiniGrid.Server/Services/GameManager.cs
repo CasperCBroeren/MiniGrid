@@ -7,7 +7,7 @@ namespace MiniGrid.Server.Services;
 
 public static class GameManager
 {
-    private const int StartCash = 6000000;
+    private const int StartCash = 600000;
     private static readonly Dictionary<string, ServerGame> _games = [];
     private static readonly object _lock = new();
 

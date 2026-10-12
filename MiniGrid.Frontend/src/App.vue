@@ -66,7 +66,7 @@
     </div>
 </template>
 
-<style scoped>
+<style>
     .container {
         display: flex;
         flex-direction: column;
@@ -124,4 +124,69 @@
         color: #6b7280;
         font-size: 0.875rem;
     }
+
+    
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: #1a5f3f;
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #11402a;
+}
+
+.btn-secondary {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: #e5e7eb;
+}
+
+.btn-success {
+  background: #059669;
+  color: white;
+}
+
+.btn-success:hover:not(:disabled) {
+  background: #047857;
+}
+
+.btn-warning {
+  background: #d97706;
+  color: white;
+}
+
+.btn-warning:hover:not(:disabled) {
+  background: #b45309;
+}
+
+.btn-danger {
+  background: #dc2626;
+  color: white;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: #b91c1c;
+}
+.btn-active {
+   background-color: #059669;
+    color: white;
+}
 </style>

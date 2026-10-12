@@ -41,7 +41,7 @@
       <div v-if="activeTab === 'create' && !hasGameCode" class="form-container">
         <form @submit.prevent="handleCreateGame" class="form">
           <label class="input-label">
-            Your Name:
+            Energy company name:
             <input v-model="nameInput" type="text" class="input-field" placeholder="Enter your name" required />
           </label>
           <button type="submit" class="btn btn-primary btn-full">
@@ -54,7 +54,7 @@
       <div v-if="activeTab === 'join' && !hasGameCode" class="form-container">
         <form @submit.prevent="handleJoinGame" class="form">
           <label class="input-label">
-            Your Name:
+            Energy company name:
             <input v-model="nameInput" type="text" class="input-field" placeholder="Enter your name" required />
           </label>
           <label class="input-label">

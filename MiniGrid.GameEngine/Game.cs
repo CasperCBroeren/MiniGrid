@@ -24,7 +24,7 @@ public class Game
     public GameSpeed GameSpeed { get; set; }
     public DayInfo CurrentDay { get; private set; }
 
-    public List<Player> Players { get; set; } = new List<Player>();
+    public List<Player> Players { get; set; } = [];
 
     public string GameCode { get; set; }
 
@@ -47,14 +47,15 @@ public class Game
                 {
                     foreach (var asset in player.Assets)
                     {
+                        var consumption = ConsumerModel.CalculateConsumptionKw(player.Clients, CurrentDay);
+                        player.TotalConsumptionKWh += consumption;
                         // The asset should be active
                         if (asset.ActivatedOn != null && asset.ActivatedOn.AddHours(asset.RampRateInHours) < CurrentDay.Date)
                         {
                             // get hourly consumption
-                            var consumption = ConsumerModel.CalculateConsumptionKw(player.Clients, CurrentDay);
+                       
                             var production = asset.ProductionPerHour(CurrentDay);
-                            player.TotalProductionKWh += production;
-                            player.TotalConsumptionKWh += consumption; 
+                            player.TotalProductionKWh += production;                        
                             player.TotalCarbonEmitted += asset.CarbonScore;
                         }
                     }
