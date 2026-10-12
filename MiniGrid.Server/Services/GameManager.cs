@@ -21,7 +21,6 @@ public static class GameManager
                 GameCode = gameCode,
                 GameEngineGame = new Game { GameCode = gameCode },
                 Players = [],
-                IsStarted = false,
                 GameSpeed = GameSpeed.Normal,
                 IsPaused = false
             };
@@ -100,7 +99,6 @@ public static class GameManager
             if (serverGame.IsStarted)
                 return false;
 
-            serverGame.IsStarted = true;
             serverGame.GameEngineGame.GameState = GameState.Playing;
             serverGame.GameEngineGame.GameSpeed = serverGame.GameSpeed;
 

@@ -6,8 +6,7 @@ import type {
   JoinGameRequest,
   JoinGameResponse,
   GameStateUpdate,
-  PlayerState,
-  BuyAssetRequest,
+  PlayerState
 } from '@/types/game';
 
 export const useGameStore = defineStore('game', () => {

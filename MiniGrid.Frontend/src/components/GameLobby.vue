@@ -42,7 +42,7 @@
         <form @submit.prevent="handleCreateGame" class="form">
           <label class="input-label">
             Energy company name:
-            <input v-model="nameInput" type="text" class="input-field" placeholder="Enter your name" required />
+            <input v-model="nameInput" type="text" class="input-field"  required />
           </label>
           <button type="submit" class="btn btn-primary btn-full">
             Create New Game
@@ -55,11 +55,11 @@
         <form @submit.prevent="handleJoinGame" class="form">
           <label class="input-label">
             Energy company name:
-            <input v-model="nameInput" type="text" class="input-field" placeholder="Enter your name" required />
+            <input v-model="nameInput" type="text" class="input-field"  required />
           </label>
           <label class="input-label">
             Game Code:
-            <input v-model="gameCodeInput" type="text" class="input-field" placeholder="Enter game code" required />
+            <input v-model="gameCodeInput" type="text" class="input-field"   required />
           </label>
           <p v-if="joinError" class="error-message">{{ joinError }}</p>
           <button type="submit" class="btn btn-primary btn-full">
@@ -70,13 +70,13 @@
 
       <!-- Player List (if in a game) -->
       <div v-if="hasGameCode" class="players-section">
-        <h3 class="section-title">Players in Lobby</h3>
+        <h3 class="section-title">Companies in game</h3>
         <div class="players-list">
           <div v-for="player in playerList" :key="player.playerId" class="player-item">
             <span class="player-name">{{ player.name }}</span>
             <span v-if="player.isGameLeader" class="leader-badge">Leader</span>
           </div>
-          <p v-if="playerList.length === 0" class="empty-message">No players yet</p>
+          <p v-if="playerList.length === 0" class="empty-message">None yet</p>
         </div>
       </div>
 

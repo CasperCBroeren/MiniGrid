@@ -6,12 +6,12 @@ using MiniGrid.Server.Services;
 namespace MiniGrid.Server.Hubs;
 
 public class GameHub : Hub, IGameHub
-{ 
+{
     private readonly ILogger<GameHub> _logger;
     private readonly IHubContext<GameHub> _hubContext;
 
     public GameHub(ILogger<GameHub> logger, IHubContext<GameHub> hubContext)
-    { 
+    {
         _logger = logger;
         _hubContext = hubContext;
     }
@@ -20,7 +20,7 @@ public class GameHub : Hub, IGameHub
     {
         var gameCode = GameManager.CreateGame(playerName, Context.ConnectionId);
         var playerId = GetPlayerIdFromConnection(Context.ConnectionId, gameCode);
-        
+
         return new CreateGameResponse
         {
             GameCode = gameCode,
@@ -42,7 +42,7 @@ public class GameHub : Hub, IGameHub
         {
             // Notify all players in the game about the new player
             BroadcastGameState(request.GameCode);
-            
+
             return new JoinGameResponse
             {
                 Success = true,
@@ -99,7 +99,7 @@ public class GameHub : Hub, IGameHub
         {
             var player = GameManager.GetPlayer(request.GameCode, request.PlayerId);
             if (player != null)
-            { 
+            {
                 _hubContext.Clients.Client(player.ConnectionId).SendAsync("FailedToBuyAsset", request.AssetType);
             }
         }
@@ -136,6 +136,7 @@ public class GameHub : Hub, IGameHub
     {
         var game = GameManager.GetGame(gameCode);
         if (game == null) return;
+        if (game.IsEnded) return;
 
         var gameStateUpdate = new GameStateUpdate
         {
@@ -162,11 +163,11 @@ public class GameHub : Hub, IGameHub
                 Assets = p.GameEnginePlayer.Assets.Select(a => a.Name).ToList()
             }).ToList()
         };
-
+         
         // Send to all clients in the game
         foreach (var player in game.Players)
         {
             _hubContext.Clients.Client(player.ConnectionId).SendAsync("GameStateUpdated", gameStateUpdate);
-        }
+        } 
     }
 }

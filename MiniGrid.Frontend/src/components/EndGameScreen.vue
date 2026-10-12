@@ -9,7 +9,7 @@
           <thead>
             <tr>
               <th class="rank-header">Rank</th>
-              <th class="player-header">Player</th>
+              <th class="player-header">Energy company</th>
               <th class="carbon-header">Carbon Rate</th>
               <th class="production-header">Production (kWh)</th>
               <th class="cash-header">Cash (€)</th>
