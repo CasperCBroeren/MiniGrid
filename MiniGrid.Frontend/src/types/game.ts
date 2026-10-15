@@ -77,10 +77,26 @@ export interface ServerGame {
 export interface Asset {
   name: string;
   price: number;
+  carbonRate: number;
+  rampRateInHours: number;
+  maxKiloWattHour: number;
+  fuelCostPerDay: number;
 }
 
 export interface PlayerAsset extends Asset {
   maxKiloWattHour: number;
+}
+
+export interface AssetConfig {
+  id: string;
+  title: string;
+  cost: number;
+  carbonRate: number;
+  rampRateInHours: number;
+  maxKWh: number;
+  fuelCostPerDay: number;
+  imagePath: string;
+  description?: string;
 }
 
 export interface BuyAssetRequest {

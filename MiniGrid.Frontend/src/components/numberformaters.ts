@@ -3,7 +3,9 @@
     currency: 'EUR',
   });
 
- export function formatWh(num:number){
+  const numberFormatter = new Intl.NumberFormat('nl-NL');
+
+export function formatWh(num:number){
     const factorG = 1000_000;
     const factorM = 1000;
    
@@ -25,4 +27,8 @@ export function pad(num:(number | string), size:number) {
 
 export function formatEuro(num:number){
   return euroFormatter.format(num); 
+}
+
+export function formatNumber(num:number):string{
+  return numberFormatter.format(num);
 }

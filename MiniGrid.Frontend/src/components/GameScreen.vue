@@ -1,6 +1,6 @@
 <template>
   <div class="game-screen">
-    <BuyAssetModel v-if="showBuyAssetModal" v-model:selectedAssetType="selectedAssetType" v-model:showBuyAssetModal="showBuyAssetModal"/>
+    <BuyAssetDialog v-if="showBuyAssetModal" v-model:selectedAssetType="selectedAssetType" v-model:showBuyAssetModal="showBuyAssetModal"/>
 
     <!-- Header with game info -->
     <header class="game-header">
@@ -136,7 +136,7 @@
 import { pad, formatWh, formatEuro } from './numberformaters.ts';
 import { computed, ref } from 'vue';
 import { useGameStore } from '@/stores/gameStore';
-import BuyAssetModel from './BuyAssetDialog.vue';
+import BuyAssetDialog from './BuyAssetDialog.vue';
 
 const gameStore = useGameStore();
 
