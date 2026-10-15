@@ -89,13 +89,13 @@ export interface PlayerAsset extends Asset {
 
 export interface AssetConfig {
   id: string;
-  title: string;
-  cost: number;
-  carbonRate: number;
+  name: string;
+  price: number;
+  carbonScore: number;
   rampRateInHours: number;
-  maxKWh: number;
+  maxKiloWattHour: number;
   fuelCostPerDay: number;
-  imagePath: string;
+  image: string;
   description?: string;
 }
 

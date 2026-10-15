@@ -1,5 +1,6 @@
 <template>
     <!-- Buy Asset Modal -->
+     
     <div class="modal-overlay" @click="closeBuyAssetModal">
       <div class="modal-content" @click.stop>
         <h3>Buy Energy Asset</h3>
@@ -15,22 +16,22 @@
           >
             <!-- Asset Image -->
             <div class="asset-image-container">
-              <img :src="asset.imagePath" :alt="asset.title" class="asset-image" />
+              <img :src="path(asset.image)" :alt="asset.name" class="asset-image" />
             </div>
             
             <!-- Asset Title -->
-            <h4 class="asset-title">{{ asset.title }}</h4>
+            <h4 class="asset-title">{{ asset.name }}</h4>
             
             <!-- Asset Cost -->
             <div class="asset-detail">
               <span class="detail-label">Cost:</span>
-              <span class="detail-value">{{ formatEuro(asset.cost) }}</span>
+              <span class="detail-value">{{ formatEuro(asset.price) }}</span>
             </div>
             
             <!-- Carbon Rate -->
             <div class="asset-detail">
               <span class="detail-label">Carbon Rate:</span>
-              <span class="detail-value">{{ asset.carbonRate }} kg CO2/MWh</span>
+              <span class="detail-value">{{ asset.carbonScore }} kg CO2/MWh</span>
             </div>
             
             <!-- Ramp Rate -->
@@ -42,7 +43,7 @@
             <!-- Maximum kWh -->
             <div class="asset-detail">
               <span class="detail-label">Max Output:</span>
-              <span class="detail-value">{{ asset.maxKWh }} kWh</span>
+              <span class="detail-value">{{ asset.maxKiloWattHour }} kWh</span>
             </div>
             
             <!-- Fuel Cost per Day -->
@@ -60,7 +61,7 @@
               class="btn btn-buy"
               :disabled="gameStore.buyAssetError !== null"
             >
-              Buy {{ asset.title }}
+              Buy {{ asset.name }}
             </button>
           </div>
         </div>
@@ -78,12 +79,12 @@
         </div>
       </div>
     </div>
+ 
 </template>
 
 <script lang="ts" setup> 
 import { ref } from 'vue';
-import { useGameStore } from '@/stores/gameStore';
-import { ASSET_CONFIGS } from '@/data/assets';
+import { useGameStore } from '@/stores/gameStore'; 
 import { formatEuro } from '@/components/numberformaters';
 
 const selectedAssetType = defineModel('selectedAssetType');
@@ -91,7 +92,11 @@ const showBuyAssetModal = defineModel('showBuyAssetModal');
 const gameStore = useGameStore();
 
 const selectedAssetId = ref<string | null>(null);
-const assets = ASSET_CONFIGS;
+const assets = await gameStore.getAssetTypes();
+
+function path(loc:string) { 
+  return new URL(loc, import.meta.url).toString();
+}
 
 // Select an asset
 const selectAsset = (assetId: string) => {

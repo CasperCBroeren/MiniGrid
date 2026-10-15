@@ -6,7 +6,8 @@ import type {
   JoinGameRequest,
   JoinGameResponse,
   GameStateUpdate,
-  PlayerState
+  PlayerState,
+  AssetConfig
 } from '@/types/game';
 
 export const useGameStore = defineStore('game', () => {
@@ -71,6 +72,10 @@ export const useGameStore = defineStore('game', () => {
       console.error('Create game error:', error);
       throw error;
     }
+  }
+  async function getAssetTypes(): Promise<AssetConfig[] | null> {
+     const response = await signalRService.getAssetTypes(); 
+     return response;
   }
 
   async function joinGame(request: JoinGameRequest): Promise<JoinGameResponse | null> {
@@ -193,5 +198,6 @@ export const useGameStore = defineStore('game', () => {
     setGameSpeed,
     buyAsset,
     resetGameState,
+    getAssetTypes
   };
 });

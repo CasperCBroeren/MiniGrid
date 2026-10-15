@@ -2,6 +2,7 @@
 
 public interface EnergyAssets
 {
+    public string Id { get; }
     public string Name { get; }
     public int Price { get; set; }
     public int MaxKiloWattHour { get; set; }
@@ -13,6 +14,10 @@ public interface EnergyAssets
 
     public GameTime? ActivatedOn { get; set; }
 
+    public string Description { get; }
+
+    public string Image { get;  }
+
     /// <summary>
     /// The production of the asset in kWh
     /// </summary>
@@ -20,9 +25,5 @@ public interface EnergyAssets
     /// <returns>kWh</returns>
     public int ProductionPerHour(DayInfo dayInfo);
 
-    /// <summary>
-    /// The production for some assets cost money
-    /// </summary>
-    /// <returns>The   cost per hour in euros</returns>
-    public int CostPerHour();
+
 }

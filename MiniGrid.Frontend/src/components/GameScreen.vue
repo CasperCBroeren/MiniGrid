@@ -1,7 +1,11 @@
 <template>
   <div class="game-screen">
-    <BuyAssetDialog v-if="showBuyAssetModal" v-model:selectedAssetType="selectedAssetType" v-model:showBuyAssetModal="showBuyAssetModal"/>
-
+    <Suspense>
+      <BuyAssetDialog v-if="showBuyAssetModal" v-model:selectedAssetType="selectedAssetType" v-model:showBuyAssetModal="showBuyAssetModal"/>
+      <template #fallback>
+        Loading...
+      </template>
+    </Suspense>
     <!-- Header with game info -->
     <header class="game-header">
       <div class="game-info"> 

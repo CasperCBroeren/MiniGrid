@@ -2,7 +2,8 @@
 
 public class WindPark : EnergyAssets
 {
-    public string Name => "Wind";
+    public string Id => "Wind";
+    public string Name => "Wind park";
     public int Price { get; set; } = 300000;
     public int MaxKiloWattHour { get; set; } = 9;
     public int CarbonScore { get; set; } = 0;
@@ -10,14 +11,12 @@ public class WindPark : EnergyAssets
     public int FuelCostPerDay { get; set; } = 0;
     public decimal PercentageActivated { get; set; } = 1;
     public GameTime? ActivatedOn { get; set; }
+    public string Image => "../assets/wind_park.png";
+    public string Description => "Clean renewable energy from wind. Zero emissions and low maintenance.";
+
     private const double cutIn = 3.0;
     private const double rated = 12.0;
     private const double cutOut = 25.0;
-
-    public int CostPerHour()
-    {
-        return 0;
-    }
 
     public int ProductionPerHour(DayInfo dayInfo)
     {

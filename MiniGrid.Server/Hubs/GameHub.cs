@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.SignalR;
 using MiniGrid.GameEngine;
+using MiniGrid.GameEngine.Assets;
 using MiniGrid.Server.Dto;
 using MiniGrid.Server.Services;
 
@@ -14,6 +15,11 @@ public class GameHub : Hub, IGameHub
     {
         _logger = logger;
         _hubContext = hubContext;
+    }
+
+    public List<EnergyAssets> GetAssetTypes()
+    {
+        return [new GasPowerPlant(), new SolarPark(), new WindPark()];
     }
 
     public CreateGameResponse CreateGame(string playerName)
@@ -160,7 +166,7 @@ public class GameHub : Hub, IGameHub
                 MonthlyConsumedKWh = p.GameEnginePlayer.MonthlyConsumedKWh,
                 MonthlyProductionKWh = p.GameEnginePlayer.MonthlyProductionKWh,
                 TotalCarbonEmitted = p.GameEnginePlayer.TotalCarbonEmitted, 
-                Assets = [.. p.GameEnginePlayer.Assets.Select(a => a.Name)]
+                Assets = [.. p.GameEnginePlayer.Assets.Select(a => a.Id)]
             })]
         };
          

@@ -1,4 +1,6 @@
 import * as signalR from '@microsoft/signalr';
+import type { AssetConfig } from '@/types/game';
+
 import type {
   CreateGameResponse,
   JoinGameRequest,
@@ -66,6 +68,13 @@ class SignalRService {
       throw new Error('Not connected to SignalR hub');
     }
     return this.connection.invoke('JoinGame', request);
+  }
+
+  async getAssetTypes(): Promise<AssetConfig[]> {
+    if (!this.connection) {
+      throw new Error('Not connected to SignalR hub');
+    }
+    return this.connection.invoke('GetAssetTypes');
   }
 
   async startGame(request: StartGameRequest): Promise<boolean> {
