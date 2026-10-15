@@ -41,6 +41,8 @@ export interface PlayerState {
   totalProductionKWh: number;
   totalConsumptionKWh: number;
   totalCarbonEmitted: number;
+  monthlyConsumptionKWh: number;
+  monthlyCarbonEmitted: number;
   balance: number;
   assets: string[];
 }

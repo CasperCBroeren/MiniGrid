@@ -136,7 +136,6 @@ public class GameHub : Hub, IGameHub
     {
         var game = GameManager.GetGame(gameCode);
         if (game == null) return;
-        if (game.IsEnded) return;
 
         var gameStateUpdate = new GameStateUpdate
         {
@@ -149,7 +148,7 @@ public class GameHub : Hub, IGameHub
             GameSpeed = game.GameSpeed,
             SolarRadiation = game.GameEngineGame.CurrentDay.SolarRadiation,
             WindSpeed = game.GameEngineGame.CurrentDay.WindSpeed,
-            Players = game.Players.Select(p => new PlayerState
+            Players = [.. game.Players.Select(p => new PlayerState
             {
                 PlayerId = p.PlayerId,
                 Name = p.Name,
@@ -158,10 +157,11 @@ public class GameHub : Hub, IGameHub
                 Clients = p.GameEnginePlayer.Clients,
                 TotalProductionKWh = p.GameEnginePlayer.TotalProductionKWh,
                 TotalConsumptionKWh = p.GameEnginePlayer.TotalConsumptionKWh,
-                TotalCarbonEmitted = p.GameEnginePlayer.TotalCarbonEmitted,
-                Balance = p.GameEnginePlayer.Balance,
-                Assets = p.GameEnginePlayer.Assets.Select(a => a.Name).ToList()
-            }).ToList()
+                MonthlyConsumedKWh = p.GameEnginePlayer.MonthlyConsumedKWh,
+                MonthlyProductionKWh = p.GameEnginePlayer.MonthlyProductionKWh,
+                TotalCarbonEmitted = p.GameEnginePlayer.TotalCarbonEmitted, 
+                Assets = [.. p.GameEnginePlayer.Assets.Select(a => a.Name)]
+            })]
         };
          
         // Send to all clients in the game

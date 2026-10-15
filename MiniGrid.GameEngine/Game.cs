@@ -1,4 +1,6 @@
-﻿namespace MiniGrid.GameEngine;
+﻿using System.Numerics;
+
+namespace MiniGrid.GameEngine;
 
 public enum GameState
 {
@@ -47,6 +49,7 @@ public class Game
                 {
                     var consumption = ConsumerModel.CalculateConsumptionKw(player.Clients, CurrentDay);
                     player.TotalConsumptionKWh += consumption;
+                    player.MonthlyConsumedKWh += consumption;
                     foreach (var asset in player.Assets)
                     {                        
                         // The asset should be active
@@ -57,12 +60,32 @@ public class Game
                             var production = asset.ProductionPerHour(CurrentDay);
                             player.TotalProductionKWh += production;                        
                             player.TotalCarbonEmitted += asset.CarbonScore;
+                            player.MonthlyProductionKWh += production;
                         }
                     }
                 }
                 // Update to advance to a next hour                
                 CurrentDay = CurrentDay.Progress();
 
+                // Every first day of the month you get paid
+                if (CurrentDay.Date.IsFirstDayOfMonth)
+                {
+                    foreach (var player in Players)
+                    {
+                        player.CashInEuro += player.Clients * 150; // 150 euro per client because idk
+                        var balance = player.MonthlyProductionKWh - player.MonthlyConsumedKWh;
+                        if (balance > 0)
+                        {
+                            player.CashInEuro -= balance * 3;
+                        }
+                        else if(balance < 0)
+                        {
+                            player.CashInEuro -= balance * 5; // larger penalty for not producing enough energy
+                        }
+                        player.MonthlyProductionKWh = 0;
+                        player.MonthlyConsumedKWh = 0;
+                    }
+                }
                 if (CurrentDay.Date.IsNewYear)
                 {
                     GameState = GameState.Ended;

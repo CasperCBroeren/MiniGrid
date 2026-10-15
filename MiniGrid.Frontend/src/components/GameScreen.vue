@@ -39,15 +39,15 @@
         <div class="stats-grid">
           <div class="stat-item">
             Production
-            <span class="stat-value">{{ currentProduction }} kWh</span> 
+            <span class="stat-value">{{ formatWh(currentProduction) }}</span> 
           </div>
           <div class="stat-item">
             Consumption
-            <span class="stat-value">{{ currentConsumption }} kWh</span> 
+            <span class="stat-value">{{ formatWh(currentConsumption) }}</span> 
           </div>
           <div class="stat-item">
             Current cash
-            <span class="stat-value">€ {{ cashInEuro }}</span> 
+            <span class="stat-value">{{ formatEuro(cashInEuro) }}</span> 
           </div>
           <div class="stat-item">
             Clients
@@ -124,8 +124,8 @@
             <span class="stat-label" v-else>Assets</span>
           </div>
           <div class="stat-item">
-            <span class="stat-value">{{ gameStore.players.reduce((sum, p) => sum + (p.totalProductionKWh || 0), 0) }}</span>
-            <span class="stat-label">kWh production</span>
+            <span class="stat-value">{{ formatWh(gameStore.players.reduce((sum, p) => sum + (p.totalProductionKWh || 0), 0)) }}</span>
+            <span class="stat-label">Total production</span>
           </div>
         </div>
       </div> 
@@ -133,6 +133,7 @@
   </div>
 </template>
 <script setup lang="ts">
+import { pad, formatWh, formatEuro } from './numberformaters.ts';
 import { computed, ref } from 'vue';
 import { useGameStore } from '@/stores/gameStore';
 import BuyAssetModel from './BuyAssetDialog.vue';
@@ -162,10 +163,10 @@ const currentCarbon = computed(() => {
   return currentPlayer.value?.totalCarbonEmitted || 0;
 });
 const currentProduction = computed(() => {
-  return currentPlayer.value?.totalProductionKWh || 0;
+  return currentPlayer.value?.monthlyProductionKWh || 0;
 });
 const currentConsumption = computed(() => {
-  return currentPlayer.value?.totalConsumptionKWh || 0;
+  return currentPlayer.value?.monthlyConsumedKWh || 0;
 });
 // Count of each asset type
 const solarAssetCount = computed(() => {
@@ -175,8 +176,6 @@ const solarAssetCount = computed(() => {
 const windAssetCount = computed(() => {
   return playerAssets.value.filter(a => a === 'Wind').length;
 }); 
-
- 
 
 const totalAssetCount = computed(() => {
  return gameStore.players.reduce((sum, p) => sum + (p.assets.length || 0), 0);
@@ -199,11 +198,7 @@ const formattedDate = computed(() => {
   
   return `${pad(day,2)} ${monthName} at ${pad(hour,2)}:00`;
 });
-function pad(num:(number | string), size:number) {
-    let outNum = num.toString();
-    while (outNum.length < size) outNum = "0" + outNum;
-    return outNum;
-}
+
 // Get solar radiation with formatting
 const solarRadiation = computed(() => {
   const radiation = gameStore.gameState?.solarRadiation;

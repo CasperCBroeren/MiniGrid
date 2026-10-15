@@ -210,7 +210,9 @@ public static class GameManager
         {
             foreach (var serverGame in _games.Values)
             {
-                if (serverGame.IsStarted && !serverGame.IsPaused)
+                if (serverGame.IsStarted 
+                    && !serverGame.IsPaused 
+                    && !serverGame.IsEnded)
                 {
                     serverGame.GameEngineGame.Tick();
                     gameHub.BroadcastGameState(serverGame.GameCode);
@@ -223,7 +225,7 @@ public static class GameManager
     {
         const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         var random = new Random();
-        return new string(Enumerable.Repeat(chars, 6).Select(s => s[random.Next(s.Length)]).ToArray());
+        return new string([.. Enumerable.Repeat(chars, 6).Select(s => s[random.Next(s.Length)])]);
     }
 
     public static GamePlayer? GetPlayer(string gameCode, string playerId)

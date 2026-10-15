@@ -9,11 +9,12 @@ public class Player
     public int CashInEuro { get; set; }
     public int Clients { get; set; } = 500;
     public int TotalProductionKWh { get; internal set; }
-    public int TotalCarbonEmitted { get; internal set; }
-    public int Balance { get; internal set; }
+    public int TotalCarbonEmitted { get; internal set; } 
     public int TotalConsumptionKWh { get; internal set; }
 
     public bool GameLeader { get; set; }
+    public int MonthlyConsumedKWh { get; internal set; }
+    public int MonthlyProductionKWh { get; internal set; }
 
     public bool BuyAsset(EnergyAssets asset)
     {

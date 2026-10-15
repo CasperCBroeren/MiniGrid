@@ -11,8 +11,8 @@
               <th class="rank-header">Rank</th>
               <th class="player-header">Energy company</th>
               <th class="carbon-header">Carbon Rate</th>
-              <th class="production-header">Production (kWh)</th>
-              <th class="cash-header">Cash (€)</th>
+              <th class="production-header">Production</th>
+              <th class="cash-header">Cash</th>
             </tr>
           </thead>
           <tbody>
@@ -20,8 +20,8 @@
               <td class="rank-cell">{{ index + 1 }}</td>
               <td class="player-cell">{{ player.name }}</td>
               <td class="carbon-cell">{{ player.totalCarbonEmitted }}</td>
-              <td class="production-cell">{{ player.totalProductionKWh }}</td>
-              <td class="cash-cell">€ {{ player.cashInEuro }}</td>
+              <td class="production-cell">{{ formatWh(player.totalProductionKWh) }}</td>
+              <td class="cash-cell">{{ formatEuro(player.cashInEuro) }}</td>
             </tr>
           </tbody>
         </table>
@@ -39,6 +39,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useGameStore } from '@/stores/gameStore';
+import { formatWh, formatEuro } from './numberformaters.ts';
 
 const gameStore = useGameStore();
 

@@ -3,8 +3,9 @@
 
 public record GameTime(int Month, int Day, int Hour)
 {
-    public static GameTime StartOfGame => new GameTime(1, 1, 0);
-    public bool IsNewYear => Month == 1 && Day == 1 && Hour == 0;
+    public static GameTime StartOfGame => new(1, 1, 0);
+    public bool IsNewYear => Month == 1 && IsFirstDayOfMonth;
+    public bool IsFirstDayOfMonth => Day == 1 && Hour == 0;
 
     public GameTime NextHour()
     {

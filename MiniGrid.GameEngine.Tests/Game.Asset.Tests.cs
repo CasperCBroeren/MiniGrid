@@ -36,8 +36,8 @@ public class GameTestsAssets
         game.GameState.Should().Be(GameState.Ended);
         // In general a solar panel (in the neteherlands) will produce less energy than a wind turbine, so we expect the total production of the solar player to be less than that of the wind player
         solarPlayer.TotalProductionKWh.Should().BeLessThan(windPlayer.TotalProductionKWh);
-        solarPlayer.TotalProductionKWh.Should().Be(107_067); // TODO Isnt this more like 1.400.000 Kw
-        windPlayer.TotalProductionKWh.Should().BeInRange(600_000, 650_000); // TODO Isnt this more like 6.000.000 Kwh
+        solarPlayer.TotalProductionKWh.Should().Be(14_700);  
+        windPlayer.TotalProductionKWh.Should().BeInRange(45_000, 50_000);  
         // The total consumption should be the same for both players since they have the same number of clients
         solarPlayer.TotalConsumptionKWh.Should().Be(windPlayer.TotalConsumptionKWh);
     }    

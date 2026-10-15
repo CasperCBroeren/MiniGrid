@@ -22,7 +22,7 @@ public static class ConsumerModel
             _ => 1.0 // Spring/Fall: normal consumption
         };
         // Total consumption calculation
-        var kWh =  (baseConsumptionPerClientWatt * timeOfDayMultiplier * seasonalMultiplier) / 1000;
+        var kWh =  (baseConsumptionPerClientWatt * timeOfDayMultiplier * seasonalMultiplier) / 50000;
         return (int)(clients * kWh)/10; // for balance just divide by 10 to make it more realistic for the game
     }   
 }

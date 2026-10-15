@@ -3,8 +3,8 @@
 public class Wind : EnergyAssets
 {
     public string Name => "Wind";
-    public int Price { get; set; } = 100000;
-    public int MaxKiloWattHour { get; set; } = 125;
+    public int Price { get; set; } = 300000;
+    public int MaxKiloWattHour { get; set; } = 9;
     public int CarbonScore { get; set; } = 0;
     public int RampRateInHours { get; set; } = 1;
     public int FuelCostPerDay { get; set; } = 0;

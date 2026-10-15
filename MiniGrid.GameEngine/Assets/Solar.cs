@@ -4,7 +4,7 @@ public class Solar : EnergyAssets
 {
     public string Name => "Solar";
     public int Price { get; set; } = 100000;
-    public int MaxKiloWattHour { get; set; } = 80; // kind of imitates the size of the panels.
+    public int MaxKiloWattHour { get; set; } = 11; // kind of imitates the size of the panels.
     public int CarbonScore { get; set; } = 0;
     public int RampRateInHours { get; set; } = 1;
     public int FuelCostPerDay { get; set; } = 0;
