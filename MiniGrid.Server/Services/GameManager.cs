@@ -248,11 +248,15 @@ public static class GameManager
 
             if (assetType == "Wind")
             {   
-                return player.GameEnginePlayer.BuyAsset(new Wind());
+                return player.GameEnginePlayer.BuyAsset(new WindPark());
             }
             else if (assetType == "Solar")
             { 
-                return player.GameEnginePlayer.BuyAsset(new Solar());
+                return player.GameEnginePlayer.BuyAsset(new SolarPark());
+            }
+            else if (assetType == "Gas")
+            {
+                return player.GameEnginePlayer.BuyAsset(new GasPowerPlant());
             }
             else
             {

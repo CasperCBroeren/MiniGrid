@@ -9,7 +9,7 @@ export const ASSET_CONFIGS: AssetConfig[] = [
     rampRateInHours: 1,
     maxKWh: 11,
     fuelCostPerDay: 0,
-    imagePath: new URL('./assets/solar_park.svg', import.meta.url).toString(),
+    imagePath: new URL('../assets/solar_park.png', import.meta.url).toString(),
     description: 'Clean renewable energy from sunlight. Zero emissions and low maintenance.'
   },
   {
@@ -20,8 +20,19 @@ export const ASSET_CONFIGS: AssetConfig[] = [
     rampRateInHours: 1,
     maxKWh: 9,
     fuelCostPerDay: 0,
-    imagePath: new URL('./assets/wind_park.svg', import.meta.url).toString(),
-    description: 'Harness the power of wind. Reliable and sustainable energy source.'
+    imagePath: new URL('../assets/wind_park.png', import.meta.url).toString(),
+    description: 'Harness the power of wind all day, every season. Reliable and sustainable energy source.'
+  },
+  {
+    id: 'Gas',
+    title: 'Gas plant',
+    cost: 200000,
+    carbonRate: 0,
+    rampRateInHours: 2,
+    maxKWh: 6,
+    fuelCostPerDay: 2,
+    imagePath: new URL('../assets/gas_powerPlant.png', import.meta.url).toString(),
+    description: 'Burn reliable and somewhat clean fuel'
   }
 ];
 

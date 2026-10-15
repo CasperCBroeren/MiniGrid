@@ -1,6 +1,6 @@
 ﻿namespace MiniGrid.GameEngine.Assets;
 
-public class Wind : EnergyAssets
+public class WindPark : EnergyAssets
 {
     public string Name => "Wind";
     public int Price { get; set; } = 300000;

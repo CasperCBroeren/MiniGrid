@@ -15,14 +15,14 @@ public class GameTestsAssets
         };
         var solarPlayer = new Player() {  CashInEuro = 1000000, TakesPartIn = game };
         solarPlayer.BuyAsset(
-            new Solar()
+            new SolarPark()
             {
                    ActivatedOn = GameTime.StartOfGame            
             }
         );
         var windPlayer = new Player() { CashInEuro = 1000000, TakesPartIn = game };
         windPlayer.BuyAsset(
-            new Wind()
+            new WindPark()
             {
                 ActivatedOn = GameTime.StartOfGame
             }

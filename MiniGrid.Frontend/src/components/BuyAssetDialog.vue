@@ -140,7 +140,7 @@ const buyAsset = async (assetId: string) => {
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
-  min-width: 800px;
+  min-width: 900px;
   max-width: 90vw;
   max-height: 90vh;
   overflow-y: auto;
@@ -163,7 +163,7 @@ const buyAsset = async (assetId: string) => {
 /* Assets Grid */
 .assets-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
   margin-bottom: 1.5rem;
 }
@@ -177,6 +177,7 @@ const buyAsset = async (assetId: string) => {
   cursor: pointer;
   transition: all 0.3s ease;
   text-align: center;
+  width: 300px;
 }
 
 .asset-card:hover {
@@ -247,6 +248,7 @@ const buyAsset = async (assetId: string) => {
   padding: 0.5rem;
   background: rgba(26, 95, 63, 0.05);
   border-radius: 6px;
+  min-height: 75px;
 }
 
 /* Buy Button */

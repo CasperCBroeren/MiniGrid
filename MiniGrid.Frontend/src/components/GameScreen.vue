@@ -66,7 +66,7 @@
               ☀️
             </div>
             <div class="asset-info">
-              <span class="asset-name">Solar</span>
+              <span class="asset-name">Solar park</span>
               <span class="asset-count">{{ solarAssetCount }}</span>
             </div>
           </div>
@@ -75,8 +75,17 @@
              🌬️
             </div>
             <div class="asset-info">
-              <span class="asset-name">Wind</span>
+              <span class="asset-name">Wind farm</span>
               <span class="asset-count">{{ windAssetCount }}</span>
+            </div>
+          </div>
+            <div class="asset-item">
+            <div class="asset-icon wind">
+             🔥
+            </div>
+            <div class="asset-info">
+              <span class="asset-name">Gas plant</span>
+              <span class="asset-count">{{ gasAssetCount }}</span>
             </div>
           </div>
         </div>
@@ -176,7 +185,9 @@ const solarAssetCount = computed(() => {
 const windAssetCount = computed(() => {
   return playerAssets.value.filter(a => a === 'Wind').length;
 }); 
-
+const gasAssetCount = computed(() => { 
+  return playerAssets.value.filter(a => a === 'Gas').length;
+}); 
 const totalAssetCount = computed(() => {
  return gameStore.players.reduce((sum, p) => sum + (p.assets.length || 0), 0);
 });
@@ -448,7 +459,7 @@ const gameSpeedDisplay = computed(() => {
 /* Asset styles */
 .assets-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 1rem;
   margin-bottom: 1.5rem;
 }
