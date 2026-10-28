@@ -1,7 +1,18 @@
 <Project>
   <PropertyGroup>
     <RootNamespace>MiniGrid.Frontend</RootNamespace>
+    <StartProgram>npm</StartProgram>
+    <ApplicationArguments>run dev</ApplicationArguments>
+    <WorkingDirectory>$(ProjectDir)</WorkingDirectory>
   </PropertyGroup>
+
+  <Target Name="BeforeBuild">
+    <Exec Command="npm install" WorkingDirectory="$(ProjectDir)" />
+  </Target>
+
+  <Target Name="AfterBuild">
+    <Exec Command="npm run build" WorkingDirectory="$(ProjectDir)" />
+  </Target>
 
   <ItemGroup>
     <None Include="**/*" Exclude="node_modules/**/*;dist/**/*" />
