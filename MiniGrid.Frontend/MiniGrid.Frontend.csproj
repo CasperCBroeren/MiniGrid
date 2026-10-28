@@ -1,14 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup> 
-    <RootNamespace>MiniGrid.Frontend</RootNamespace> 
+<Project>
+  <PropertyGroup>
+    <RootNamespace>MiniGrid.Frontend</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="**/*.vue" CopyToOutputDirectory="PreserveNewest" />
-    <None Include="**/*.ts" CopyToOutputDirectory="PreserveNewest" />
-    <None Include="**/*.js" CopyToOutputDirectory="PreserveNewest" />
-    <None Include="**/*.json" CopyToOutputDirectory="PreserveNewest" />
-    <None Include="**/*.html" CopyToOutputDirectory="PreserveNewest" />
-    <None Include="**/*.css" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="**/*" Exclude="node_modules/**/*;dist/**/*" />
   </ItemGroup>
 </Project>
