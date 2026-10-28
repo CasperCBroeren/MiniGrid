@@ -4,16 +4,17 @@
     <StartProgram>npm</StartProgram>
     <ApplicationArguments>run dev</ApplicationArguments>
     <WorkingDirectory>$(ProjectDir)</WorkingDirectory>
+    <ProjectGuid>{002ED63C-2CF4-ED7F-3B9C-ED6E70C578AD}</ProjectGuid>
   </PropertyGroup>
-
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <Target Name="BeforeBuild">
     <Exec Command="npm install" WorkingDirectory="$(ProjectDir)" />
   </Target>
-
   <Target Name="AfterBuild">
     <Exec Command="npm run build" WorkingDirectory="$(ProjectDir)" />
   </Target>
-
   <ItemGroup>
     <None Include="**/*" Exclude="node_modules/**/*;dist/**/*" />
   </ItemGroup>

@@ -59,7 +59,7 @@ public class Game
                        
                             var production = asset.ProductionPerHour(CurrentDay);
                             player.TotalProductionKWh += production;                        
-                            player.TotalCarbonEmitted += asset.CarbonScore;
+                          
                             player.MonthlyProductionKWh += production;
                         }
                     }
@@ -84,6 +84,8 @@ public class Game
                         }
                         player.MonthlyProductionKWh = 0;
                         player.MonthlyConsumedKWh = 0;
+
+                        player.TotalCarbonEmitted += player.Assets.Sum(x => x.CarbonScore);
                     }
                 }
                 if (CurrentDay.Date.IsNewYear)
